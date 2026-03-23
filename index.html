@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>筋肉間違い探し / Muscle Spot the Difference | MuscleLove</title>
+  <meta name="description" content="筋肉間違い探し！2つの画像を見比べて違いを見つけよう！💪 Muscle Spot the Difference - Find all the differences!">
+  <meta property="og:title" content="筋肉間違い探し / Muscle Spot the Difference | MuscleLove">
+  <meta property="og:description" content="筋肉間違い探し！2つの画像を見比べて違いを見つけよう！💪">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- TITLE SCREEN -->
+  <div id="screen-title" class="screen active">
+    <div class="title-container">
+      <div class="brand">MuscleLove</div>
+      <h1 class="game-title">
+        <span class="title-jp">筋肉間違い探し</span>
+        <span class="title-en">Muscle Spot the Difference</span>
+      </h1>
+      <p class="subtitle">2つの画像を見比べて違いを見つけよう！<br>Compare two images and find the differences!</p>
+      <div class="how-to-play">
+        <div class="how-step"><span class="step-num">1</span> 左が元画像 / Left is original</div>
+        <div class="how-step"><span class="step-num">2</span> 右の違いをタップ！/ Tap differences on right!</div>
+        <div class="how-step"><span class="step-num">3</span> 60秒以内に全部見つけよう！</div>
+      </div>
+      <button id="btn-start" class="btn-main pulse">START<span class="btn-sub">スタート</span></button>
+      <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener" class="patreon-link">
+        ❤️ Support on Patreon
+      </a>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="screen-game" class="screen">
+    <div class="game-hud">
+      <div class="hud-item">
+        <span class="hud-label">ラウンド / Round</span>
+        <span class="hud-value" id="hud-round">1/5</span>
+      </div>
+      <div class="hud-item timer-box">
+        <span class="hud-label">残り時間 / Time</span>
+        <span class="hud-value" id="hud-timer">60</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">発見 / Found</span>
+        <span class="hud-value" id="hud-found">0/0</span>
+      </div>
+    </div>
+
+    <div class="images-container">
+      <div class="image-panel">
+        <div class="panel-label">元画像 / Original</div>
+        <div class="canvas-wrapper">
+          <canvas id="canvas-original"></canvas>
+        </div>
+      </div>
+      <div class="image-panel">
+        <div class="panel-label">間違いを探せ！/ Find Differences!</div>
+        <div class="canvas-wrapper">
+          <canvas id="canvas-modified"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="feedback-overlay" class="feedback-overlay hidden"></div>
+  </div>
+
+  <!-- ROUND CLEAR SCREEN -->
+  <div id="screen-round-clear" class="screen">
+    <div class="round-clear-container">
+      <div class="round-clear-title">ラウンドクリア！<br><span class="en-small">Round Clear!</span></div>
+      <div class="round-clear-stats">
+        <div><span id="rc-found">0</span> / <span id="rc-total">0</span> 発見</div>
+        <div>残り <span id="rc-time">0</span> 秒</div>
+      </div>
+      <button id="btn-next-round" class="btn-main">NEXT<span class="btn-sub">次のラウンド</span></button>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="screen-result" class="screen">
+    <div class="result-container">
+      <div class="brand">MuscleLove</div>
+      <h2 class="result-title">
+        <span class="title-jp">結果発表</span>
+        <span class="title-en">Results</span>
+      </h2>
+      <div class="result-stats">
+        <div class="stat-row">
+          <span class="stat-label">発見数<br><span class="en-small">Total Found</span></span>
+          <span class="stat-value" id="result-found">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">正確率<br><span class="en-small">Accuracy</span></span>
+          <span class="stat-value" id="result-accuracy">0%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">残り時間合計<br><span class="en-small">Time Left</span></span>
+          <span class="stat-value" id="result-time">0s</span>
+        </div>
+      </div>
+      <div class="result-rank" id="result-rank"></div>
+      <div class="result-buttons">
+        <button id="btn-share" class="btn-share">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Xでシェア / Share on X
+        </button>
+        <button id="btn-retry" class="btn-main">RETRY<span class="btn-sub">もう一度</span></button>
+      </div>
+      <a href="https://www.patreon.com/cw/MuscleLove" target="_blank" rel="noopener" class="patreon-link">
+        ❤️ Support on Patreon
+      </a>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
